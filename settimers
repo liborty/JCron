@@ -1,0 +1,38 @@
+#!/bin/bash
+# takes five arguments for setting up dtimer.js and the fifth is cron script
+# generates relevant cronfile cronf and starts crontab with it
+
+if [ $# -ne 5 ]; then
+	printf 1>&2 "$0: expects five arguments: hourset minset frequency serverdelay and a cronscriptstring"
+	exit 2
+fi
+
+if [ $2 -ge $3 ]; then
+	printf 1>&2 "$0: Minutes offset $2 must be less than frequency $3\n"
+	exit 2
+fi
+
+# get the parent directory
+PD=$( dirname $( dirname $(readlink -f $0) ) )
+
+# add the first line to dtimer.js
+printf "%s\n%s\n" "var timermod = ( function( hourset = $1, minset = $2, mingap = $3, serverdelay = $4)" \
+"$( cat $PD/www-share/stubtimer.js )" > $HOME/www/dtimer.js
+
+# initialise crontab for the same times
+printf "TZ=UTC\n" > ~/data/cronf
+if [ $3 -gt 0 ] && [[ $3 -lt 60 ]]; then # valid mingap
+	if  [ $1 -gt -1 ] && [[ $1 -lt 24 ]]; then  # valid hourset 0-23
+		printf "$2-59/$3 $1 * * Mon-Fri $5\n" >> ~/data/cronf # sets minset/mingap hourset
+	else 
+		printf "$2-59/$3 * * * Mon-Fri $5\n" >> ~/data/cronf # sets minset/mingap for all hours *
+	fi
+elif [ $1 -gt -1 ] && [[ $1 -lt 24 ]]; then # no sub-hour repetitions and valid hourset 0-23
+	printf "$2 $1 * * Mon-Fri $5\n" >> ~/data/cronf # sets minset after the hourset
+else 
+	printf "$2 * * * Mon-Fri $5\n" >> ~/data/cronf # sets minset for all hours *
+fi
+
+crontab ~/data/cronf
+printf 1>&2 "%s %s\n" "Started crontab at" $( date +%X )
+printf "$( crontab -l )\n"
