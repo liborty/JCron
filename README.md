@@ -1,24 +1,37 @@
 # JCron
-**Client-Server Synchronisation  for Static Sites with Changing Data, © 2018 Libor Spacek.**  
-**Please send bitcoin donations to: 1FEW1E1bXjc6f1bQKdbxpPpTeYvxiLwTLN**
+**Client-Server Synchronisation  for Static Sites with Changing Data  
+Wednesday, 11. September 2019, © 2018,2019 Libor Spacek.**  
 
 Licence: BSD-3-Clause  
 
 #### Description
 
-**This model is applicable to all web publishing situations where data is being updated globally, without input from individual clients. Thus frequently changing data can be served on static sites in simple and efficient way.**
+**This model is applicable to all (static) web publishing situations where global data is being
+updated frequently and modifications to suit individual clients are not necessary.
+Thus frequently changing data can be served on static sites
+in very simple and efficient way.**
 
-These few lines of Javascript synchronise all clients in real time with server updates. This avoids lots of load, programming, databases, etc. on the server side and achieves the benefits of static site even for time sensitive, frequently updated data. 
+These few lines of Javascript synchronise all clients in real time with server
+updates. This avoids unnecessary load, programming, databases, etc. on the 
+server side and achieves the benefits of a static site even for time sensitive,
+frequently changing data. 
 
-Webpage deploying this script will display cascading countdown clock with time remaining till the next reload: first it counts down only hours, then only minutes and finally only seconds, thus alerting the clients without being boring. The cascading also puts minimal load on the client's browser.
+Webpages deploying this script will display cascading countdown clock with time remaining till the next reload: first it counts down only hours, then only minutes and finally only seconds, thus alerting the clients without being boring. The cascading also puts minimal load on the client's browser.
 
-All global clients reload the new data at the same time, as soon as it is published, without the server having to send them any explicit 'server-side events alerts'. It works regardless of any obscure client and server timezones and summertimes, even ones with fractional hours, as in South Australia. The reloads are synchronised and performed repeatedly at specified UTC times:
+All global clients reload the new data at the same time, 
+soon after it is published, without the server having to send them any explicit
+'server-side events'. It works regardless of any obscure client and server
+timezones and summertimes, even ones with fractional hours, as in South Australia.
+The reloads are synchronised and performed repeatedly at specified UTC times:
 
 Daily: `hourset(0-23):minset(0-59)+n*mingap(0-59):serverdelay(0-59)`  
 Hourly: `24:minset(0-59):serverdelay(0-59)`  
 Every few minutes: `24:minset+n*mingap(0-59):serverdelay(0-59)`
 
-`TZ=UTC` should be the first line of the server's crontab, otherwise some clients might get out of step with cron's clock. This is mandatory especially if the server runs on some local timezone or daylight saving time (using settimers.sh takes care of this).
+`TZ=UTC` should be the first line of any server's crontab, otherwise some clients
+may get out of step with cron's clock. This is mandatory especially if the server
+runs on some local timezone or daylight saving time
+(using included settimers script takes care of this).
 
 #### Files
 
