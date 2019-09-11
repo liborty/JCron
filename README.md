@@ -6,12 +6,12 @@ Licence: BSD-3-Clause
 
 #### Description
 
-**This model is applicable to all (static) web publishing situations where global data is being
+*This model is applicable to all (static) web publishing situations where global data is being
 updated frequently and modifications to suit individual clients are not necessary.
 Thus frequently changing data can be served on static sites
-in very simple and efficient way.**
+in very simple and efficient way.*
 
-These few lines of Javascript synchronise all clients in real time with server
+A few lines of JCron Javascript synchronise all clients in real time with server
 updates. This avoids unnecessary load, programming, databases, etc. on the 
 server side and achieves the benefits of a static site even for time sensitive,
 frequently changing data. 
@@ -35,9 +35,15 @@ runs on some local timezone or daylight saving time
 
 #### Files
 
-**timer.js** script is to be deployed with the server crontab. It is assumed that crontab fires up some scripts that are updating website contents at those same set  times. The timer.js script needs the above four timing constants to be manually set in its source file in concert with the crontab time settings. Do not forget to reset crontab with `crontab -r` when stopping operations.
+**timer.js** script is to be deployed with the server's `crontab`.
+It is assumed that crontab fires up some scripts that are updating
+the website contents at those same set times. 
+Timer.js needs the above four timing constants to be manually set in its source file in concert with the crontab time settings. Do not forget to reset crontab with `crontab -r` when stopping operations.
 
-**stubtimer.js** and **settimers** are provided for advanced use. The bash shell constructs programmatically **dtimer.js** (short for dynamic timer) from stubtimer.js and supplied timing parameters. At the same time it sets up the crontab. This achieves the following objectives:
+**stubtimer.js** and **settimers** are provided for advanced use. 
+The bash script `settimers` constructs programmatically **dtimer.js** (short for dynamic timer)
+from `stubtimer.js` and supplied timing parameters. 
+At the same time it sets up the crontab. This achieves the following objectives:
 
 - avoidance of errors in the manual setting of the parameters.
 - prevention of unintended mismatches with crontab. 
@@ -45,19 +51,25 @@ runs on some local timezone or daylight saving time
 - automated updating of several websites at different times.
 - ability to change the timings programmatically.
 - HTML agnostic, i.e. html file(s) are untouched.
-- minimal knowledge of crontab needed.
+- knowledge of crontab not required. 
+
 
 #### Usage
 
-Set the four constants at the top of `timer.js` to synchronise with  crontab (settimers.sh takes care of this). See an example below. 
+Set the four constants at the top of `timer.js` to synchronise with  `crontab`
+(`settimers` takes care of this). See an example below. 
 
 - `hourset` set to one of 0-23 will perform reload(s) just during that one hour each day, at `hourset : minset+n*mingap : serverdelay` UTC time.
 - `hourset` as any other number, typically 24, causes reloads at all hours at  `minset+n*mingap : serverdelay` minutes and seconds past each UTC  hour.
 - `mingap` (gap between reloads in minutes) can be set to one of 1..59. This  activates repeated reloads at mingap minutes intervals, starting at minset minutes past the hour. When mingap is set to zero, there is just one reload at minset minutes past the hour.
 - `serverdelay` is to be set in all cases to the required number of seconds that the server will need to do its work before the clients start downloading. It's value can be estimated  from the logs of your server update script. Allow a few extra seconds for a margin of error if your server has to wait for some  unpredictable  downloads of new data. When `serverdelay` is set too short, the clients will not get to see the latest data refreshed immediately.
 
-When the time is up, the clients' windows are reloaded with forced read directly from the server.
-Visitors returning to your site later may have to manually reload their cache to catch up with the server update(s) that may have happened while they were away. Similarly,  if your server exceeds its allocated server delay.
+When the time is up, the clients' windows are reloaded with forced read directly
+from the server. Visitors returning to the site later may have to wait for the
+next reload time or they can manually reload their cache to catch up with 
+the server update(s) that may have happened while they were away.
+Similar situation arises when the server exceeds its allocated server delay.
+Then the clients don'tIn that case it is advisable to increase `serverdalay`.
 
 #### Deployment in HTML
 - Clone or download the JCron directory to your www directory.
