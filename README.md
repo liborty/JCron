@@ -1,6 +1,6 @@
 # JCron
 **Client-Server Synchronisation  for Static Sites with Changing Data  
-Wednesday, 11. September 2019, © 2018,2019 Libor Spacek.**  
+Wednesday, 30. October 2019, © 2018,2019 Libor Spacek.**  
 
 Licence: BSD-3-Clause  
 
@@ -8,12 +8,11 @@ Licence: BSD-3-Clause
 
 *This model is applicable to all (static) web publishing situations where global data is being updated frequently and modifications to suit individual clients are not necessary. Thus frequently changing data can be served on static sites in a very simple and efficient way.*
 
-A few lines of JCron Javascript synchronise all clients in real time with server
-updates. This avoids unnecessary load, programming, databases, etc. on the 
+A few lines of JCron Javascript synchronise all clients in real time with server updates. This avoids unnecessary load, programming, databases, etc. on the 
 server side and achieves the benefits of a static site even for time sensitive,
 frequently changing data. 
 
-Webpages deploying this script will display cascading countdown clock with time remaining till the next reload: first it counts down only hours, then only minutes and finally only seconds, thus alerting the clients without being boring. The cascading also puts minimal load on the client's browser.
+Webpages deploying this script will display cascading countdown clock with time remaining till the next reload: first it counts down only hours, then minutes, then tens of seconds and finally only seconds, thus alerting the clients without being boring. The cascading also puts minimal load on the client's browser.
 
 All global clients reload the new data at the same time, soon after it is published, without the server having to send them any explicit 'server-side events'. It works regardless of any obscure client and server timezones and summertimes, even ones with fractional hours, as in South Australia. The reloads are synchronised and performed repeatedly at specified UTC times:
 

@@ -10,9 +10,12 @@
 // *****************************************************************************
 // For more details, see JCron/README.md
 /*jshint esversion: 6*/
+
 const day = 86400000; // relative times in milliseconds
 const hour = 3600000; 
+const twomin = 120000;
 const minute = 60000; 
+const tensec = 10000
 const second =  1000;
 
 let clock;	// timeout process to kill
@@ -21,6 +24,7 @@ let thenms;
 // showTime() runs periodically until the clock runs out ( reaches thenms )
 // then reloads client's window and stops until new activation from
 // start: by new html file (via cron) 
+
 function showTime() {
    var current = new Date(); // absolute time now in UTC milliseconds since 1970
    var mstogo = thenms - current.getTime(); // milliseconds to go
@@ -28,12 +32,14 @@ function showTime() {
       {  clearTimeout(clock); // stop the clock
          window.location.reload(true); //<===== reload client's page here, now!
          return true;  }
+   // time is not up, so display it
    var gap = hour;  // default time between checks, an hour to start with
    // the cascading gap may be shortened below, from  hours->minutes->seconds 
    var timestr = " hours"; // construct the diplay message string
-   if ( mstogo < hour ) { timestr = " minutes"; gap = minute; }
    if ( mstogo < minute ) { timestr = " seconds"; gap = second; }
-	document.getElementById('countdown').innerHTML = Math.ceil(mstogo/gap) + timestr;
+   else if ( mstogo < twomin ) { timestr = " seconds"; gap = tensec; }
+   else if ( mstogo < hour ) { timestr = " minutes"; gap = minute; }
+ 	document.getElementById('countdown').innerHTML = Math.ceil(mstogo/gap) + timestr;
 	clearTimeout(clock); // stop the clock 
  	clock = setTimeout(showTime, gap); // gets called again after (new) gap time
    return(true);
