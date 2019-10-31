@@ -36,7 +36,7 @@ function showTime() {
    var gap = hour;  // default time between checks, an hour to start with
    // the cascading gap may be shortened below, from  hours->minutes->seconds 
    var timestr = " hours"; // construct the diplay message string
-   if ( mstogo < minute ) { timestr = " seconds"; gap = second; }
+   if ( mstogo < minute ) { timestr = "0 seconds"; gap = second; }
    else if ( mstogo < twomin ) { timestr = " seconds"; gap = tensec; }
    else if ( mstogo < hour ) { timestr = " minutes"; gap = minute; }
  	document.getElementById('countdown').innerHTML = Math.ceil(mstogo/gap) + timestr;

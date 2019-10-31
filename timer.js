@@ -32,7 +32,7 @@ function showTime() {
    // the cascading gap may be shortened below, from  hours->minutes->seconds 
    var timestr = " hours"; // construct the diplay message string
    if ( mstogo < minute ) { timestr = " seconds"; gap = second; }
-   else if ( mstogo < twomin ) { timestr = " seconds"; gap = tensec; }
+   else if ( mstogo < twomin ) { timestr = "0 seconds"; gap = tensec; }
    else if ( mstogo < hour ) { timestr = " minutes"; gap = minute; }
  	document.getElementById('countdown').innerHTML = Math.ceil(mstogo/gap) + timestr;
 	clearTimeout(clock); // stop the clock 
