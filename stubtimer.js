@@ -1,9 +1,9 @@
 // var timermod = ( function( hourset = -1, minset = 3, mingap = 6, serverdelay = 3)
 {
 // to activate, uncomment the previous line with desired parameters
-// or use settimers.sh to prepend it
+// or use the script `settimers` to prepend it
 // *****************************************************************************
-// dtimer.js © 2018 Libor Spacek
+// stubtimer.js -> dtimer.js © 2018,2019 Libor Spacek
 // Licence: BSD-3-Clause
 // Website: tipbot.com
 // Send bitcoin contributions to: 1FEW1E1bXjc6f1bQKdbxpPpTeYvxiLwTLN	
@@ -14,7 +14,8 @@
 const day = 86400000; // relative times in milliseconds
 const hour = 3600000; 
 const twomin = 120000;
-const minute = 60000; 
+const minute = 60000;
+const halfminute = 30000;
 const tensec = 10000
 const second =  1000;
 
@@ -36,7 +37,7 @@ function showTime() {
    var gap = hour;  // default time between checks, an hour to start with
    // the cascading gap may be shortened below, from  hours->minutes->seconds 
    var timestr = " hours"; // construct the diplay message string
-   if ( mstogo < minute ) { timestr = " seconds"; gap = second; }
+   if ( mstogo < halfminute ) { timestr = " seconds"; gap = second; }
    else if ( mstogo < twomin ) { timestr = "0 seconds"; gap = tensec; }
    else if ( mstogo < hour ) { timestr = " minutes"; gap = minute; }
  	document.getElementById('countdown').innerHTML = Math.ceil(mstogo/gap) + timestr;

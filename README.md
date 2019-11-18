@@ -62,6 +62,9 @@ ToDo: fix this by refreshing the cache?
 
 #### Release Notes
 
+- 18th November 2019 introduced countdown by ten seconds intervals,
+now from two minutes down to half a minute. Then countdown by seconds begins.
+
 - 12th September 2019 improved this README.md file and started pushing through git.
 
 - 11th April 2019
