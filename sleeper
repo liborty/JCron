@@ -33,6 +33,7 @@ if [ -z "$G" ]; then G=300; fi
 
 # set up and start crontab which will suspend one minute after the regular $S+$G time
 # and reawaken $A seconds before the next one, using this script (this time without -r)
+# call sleeper from crontab repeatedly, with its original parameters 
 if [ $R ]; then
   SM=$(( $S/60+1 )) # start in minutes, plus one, to allow one awake minute
   GM=$(( $G/60 )) # gaps in minutes
