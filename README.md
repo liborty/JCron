@@ -39,6 +39,8 @@ from `stubtimer.js` and supplied timing parameters. At the same time it sets up 
 - HTML agnostic, i.e. html file(s) are untouched.
 - knowledge of crontab not required. 
 
+**sleeper** only a losely related bash script for suspending and awaking computers in synchrony with some regular cron tasks. It uses the same parameters (CLI). For more detailed explanations, see [readme-sleeper](https://oldmill.cz/2020-07-19-timing.html).
+
 
 #### Usage
 
@@ -58,7 +60,7 @@ ToDo: fix this by refreshing the cache?
 - Edit the four constants in timer.js, as described above.
 - Put `<script src="JCron/timer.js"></script>` somewhere in your html  header. 
 - Alternatively, use the dynamic version  `<script src="JCron/dtimer.js"></script>` and supply the four constants, plus the script to be fired up by crontab, as arguments to `settimers`. Change the html `<body>` tag to: `<body onload="timermod.start();">` not forgetting the punctuation! 
-- Countdown clock is diplayed in `<span id="countdown"></span>` or any other tag with `id="countdown"`. It can be put anywhere convenient within your html page and formatted with CSS as desired. See an example application in [tipbot.com](https://tipbot.com/index.html).
+- Countdown clock is diplayed in `<span id="countdown"></span>` or any other tag with `id="countdown"`. It can be put anywhere convenient within your html page and formatted with CSS as desired. See an example application [AWT](https://awt-web.netlify.app/).
 
 #### Release Notes
 
