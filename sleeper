@@ -39,10 +39,11 @@ if [ $R ]; then
   GM=$(( $G/60 )) # gaps in minutes
   printf "TZ=UTC\n$SM-59/$GM * * * * sudo $PD/bin/sleeper -a $A -s $S -g $G >> $PD/data/sleepercronlog\n" | crontab -u root -  
 fi
-# the rest is executed either manually or by crontab causing suspend
-# calculate for how many seconds to suspend (sleep) for, using modulo arithmetic on unix seconds
-# start with basic gap increment of $G seconds
-# subtract start from unix seconds to get time we would have now if there was no start offset delay
-# get (modulo $G)  pure execution time already elapsed
-# subtract seconds advance $A
+# The rest is executed either manually or by crontab causing suspend.
+# This calculation is particularly important at the first invocation of 'sleeper -r' because that can happen at any time:
+# calculate how many seconds remain till the next time to wake up
+# use regular gap increment of $G seconds
+# subtract start $S from current unix seconds $(date +%s), to get time it would be now if there was no start offset delay
+# get (modulo %$G) execution time already elapsed in the current cycle
+# subtract advance $A and set rtcwake to wake the computer in that many seconds:
 sudo rtcwake -m mem -u -s $(( $G-($(date +%s)-$S)%$G-$A ))
